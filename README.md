@@ -1,36 +1,137 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Buddy Script
 
-## Getting Started
+A social media platform built with Next.js 14 App Router, NextAuth.js, Prisma, and PostgreSQL.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework:** Next.js 14 (App Router) + TypeScript
+- **Auth:** NextAuth.js v4 with JWT + Credentials provider
+- **ORM:** Prisma v5 + PostgreSQL (Neon-compatible)
+- **Validation:** Zod
+- **Styling:** Original CSS (Bootstrap + custom) + Tailwind CSS utilities
+- **Deployment:** Vercel and Netlify compatible
+
+## Setup
+
+### 1. Clone and install dependencies
+
+```bash
+git clone <repo-url>
+cd buddy-script
+npm install
+```
+
+### 2. Configure environment variables
+
+Copy `.env.example` to `.env.local` and fill in your values:
+
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
+NEXTAUTH_SECRET="generate-a-strong-random-secret"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+For `NEXTAUTH_SECRET`, generate a random value:
+```bash
+openssl rand -base64 32
+```
+
+### 3. Set up the database
+
+Run Prisma migrations to create the database schema:
+
+```bash
+npx prisma migrate dev --name init
+```
+
+Or for production:
+
+```bash
+npx prisma migrate deploy
+```
+
+### 4. Generate Prisma client
+
+```bash
+npx prisma generate
+```
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Vercel
 
-## Learn More
+1. Push to GitHub
+2. Import the repository in Vercel
+3. Add environment variables in Vercel dashboard:
+   - `DATABASE_URL`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL` (your production URL)
+4. Deploy
 
-To learn more about Next.js, take a look at the following resources:
+### Netlify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push to GitHub
+2. Import the repository in Netlify
+3. Build settings are configured in `netlify.toml`
+4. Add environment variables in Netlify dashboard
+5. Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+buddy-script/
+├── app/
+│   ├── (auth)/
+│   │   ├── layout.tsx          # Auth layout (loads CSS files)
+│   │   ├── login/page.tsx      # Login page
+│   │   └── register/page.tsx   # Registration page
+│   ├── api/
+│   │   └── auth/
+│   │       ├── [...nextauth]/route.ts   # NextAuth handler
+│   │       └── register/route.ts       # Registration API
+│   ├── feed/page.tsx           # Feed page (protected)
+│   ├── layout.tsx              # Root layout with SessionProvider
+│   └── page.tsx                # Root redirect to /login
+├── components/
+│   └── providers/
+│       └── SessionProvider.tsx # Client-side session provider
+├── lib/
+│   ├── auth.ts                 # NextAuth options
+│   ├── prisma.ts               # Prisma client singleton
+│   └── validators.ts           # Zod schemas
+├── prisma/
+│   └── schema.prisma           # Database schema
+├── public/
+│   └── assets/                 # CSS, images, fonts, JS
+├── types/
+│   └── next-auth.d.ts          # NextAuth type extensions
+├── middleware.ts               # Route protection middleware
+└── netlify.toml                # Netlify deployment config
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Features (Phase 1 and Phase 2)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- User registration with first name, last name, email, and password
+- Secure password hashing with bcryptjs (cost factor 12)
+- JWT-based authentication with NextAuth.js
+- Protected routes (feed requires authentication via middleware)
+- Pixel-perfect replication of the original HTML/CSS design
+- Inline form validation with error messages
+- Loading states on submit buttons
+- Redirect to login after registration with success message
+- Redirect to feed after successful login
+# task--from--appifylab
