@@ -1,0 +1,44 @@
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inlineWrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.inlineBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text2, #666);
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.inlineBtn:hover {
+  color: #377dff;
+}
+
+.liked {
+  color: #377dff;
+  font-weight: 600;
+}
+
+.countBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text2, #666);
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.countBtn:hover {
+  text-decoration: underline;
+}

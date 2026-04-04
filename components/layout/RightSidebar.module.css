@@ -1,0 +1,9 @@
+.card {
+  margin-bottom: 16px;
+}
+
+.placeholder {
+  font-size: 13px;
+  color: var(--text2, #888);
+  padding-bottom: 16px;
+}

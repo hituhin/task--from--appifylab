@@ -1,0 +1,66 @@
+.wrapper {
+  composes: _social_registration_wrapper from global;
+  composes: _layout_main_wrapper from global;
+}
+.shapeOne   { composes: _shape_one from global; }
+.shapeTwo   { composes: _shape_two from global; }
+.shapeThree { composes: _shape_three from global; }
+.shapeImg   { composes: _shape_img from global; }
+.darkShape  { composes: _dark_shape from global; }
+.dimShape {
+  composes: _dark_shape from global;
+  composes: _dark_shape_opacity from global;
+}
+.regWrap          { composes: _social_registration_wrap from global; }
+.rightSide        { composes: _social_registration_right from global; }
+.illustration     { composes: _social_registration_right_image from global; }
+.illustrationDark { composes: _social_registration_right_image_dark from global; }
+.content          { composes: _social_registration_content from global; }
+.logoWrap {
+  composes: _social_registration_right_logo from global;
+  composes: _mar_b28 from global;
+}
+.logo    { composes: _right_logo from global; }
+.tagline {
+  composes: _social_registration_content_para from global;
+  composes: _mar_b8 from global;
+}
+.heading {
+  composes: _social_registration_content_title from global;
+  composes: _titl4 from global;
+  composes: _mar_b50 from global;
+}
+.googleBtn {
+  composes: _social_registration_content_btn from global;
+  composes: _mar_b40 from global;
+}
+.googleIcon { composes: _google_img from global; }
+.divider {
+  composes: _social_registration_content_bottom_txt from global;
+  composes: _mar_b40 from global;
+}
+.form      { composes: _social_registration_form from global; }
+.fieldWrap {
+  composes: _social_registration_form_input from global;
+  composes: _mar_b14 from global;
+}
+.label {
+  composes: _social_registration_label from global;
+  composes: _mar_b8 from global;
+}
+.input      { composes: _social_registration_input from global; }
+.checkWrap  { composes: _social_registration_form_check from global; }
+.check      { composes: _social_registration_form_check_input from global; }
+.checkLabel { composes: _social_registration_form_check_label from global; }
+.btnWrap {
+  composes: _social_registration_form_btn from global;
+  composes: _mar_t40 from global;
+  composes: _mar_b60 from global;
+}
+.submitBtn {
+  composes: _social_registration_form_btn_link from global;
+  composes: _btn1 from global;
+  white-space: nowrap;
+}
+.footer     { composes: _social_registration_bottom_txt from global; }
+.footerText { composes: _social_registration_bottom_txt_para from global; }

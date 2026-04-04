@@ -1,0 +1,58 @@
+.card {
+  position: relative;
+}
+
+.content {
+  /* inherits _feed_inner_timeline_content */
+}
+
+.avatarWrap {
+  display: flex;
+  align-items: center;
+}
+
+.privateBadge {
+  background: #f59e0b;
+  color: #fff;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.dropdown {
+  position: absolute;
+  right: 24px;
+  top: 48px;
+  z-index: 100;
+}
+
+.dropBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reacts {
+  /* inherits */
+}
+
+.commentCountBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text2, #666);
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.commentCountBtn:hover {
+  text-decoration: underline;
+}

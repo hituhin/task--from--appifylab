@@ -1,0 +1,30 @@
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 24px;
+  color: var(--text2, #666);
+  font-size: 15px;
+  background: var(--bg2, #fff);
+  border-radius: 12px;
+}
+
+.sentinel {
+  height: 20px;
+}
+
+.loadingWrap {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.endMessage {
+  text-align: center;
+  color: var(--text2, #999);
+  font-size: 13px;
+  padding: 16px 0 8px;
+}

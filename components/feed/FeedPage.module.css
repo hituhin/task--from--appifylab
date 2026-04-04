@@ -1,0 +1,16 @@
+.wrapper {
+  composes: _layout from global;
+  composes: _layout_main_wrapper from global;
+}
+
+.inner {
+  padding-top: 70px;
+  overflow: hidden;
+}
+
+.middle {
+  height: calc(100vh - 75px);
+  overflow-y: auto;
+  padding-top: 18px;
+  padding-bottom: 24px;
+}
