@@ -1,13 +1,27 @@
 .wrap {
   display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  flex-direction: column;
   margin-top: 12px;
   padding-left: 20px;
 }
 
+.replyMain {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .content {
   flex: 1;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding-left: 52px;
+  flex-wrap: wrap;
 }
 
 .likeLink {

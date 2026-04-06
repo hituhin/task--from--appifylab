@@ -15,7 +15,7 @@ export default async function Feed() {
     include: {
       author: { select: { id: true, firstName: true, lastName: true } },
       _count: { select: { likes: true, comments: true } },
-      likes: { where: { userId: session.user.id }, select: { userId: true } },
+      likes: { where: { userId: session.user.id }, select: { userId: true, reactionType: true } },
     },
     orderBy: { createdAt: 'desc' },
     take: 10,

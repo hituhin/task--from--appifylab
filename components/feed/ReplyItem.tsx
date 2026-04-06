@@ -44,6 +44,7 @@ export default function ReplyItem({ reply, currentUserId, onDelete }: ReplyItemP
 
   return (
     <div className={styles.wrap}>
+      <div className={styles.replyMain}>
       {/* Avatar */}
       <div className="_comment_image" style={{ flexShrink: 0 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -76,29 +77,18 @@ export default function ReplyItem({ reply, currentUserId, onDelete }: ReplyItemP
             </div>
           )}
 
-          {/* Like / Share / time row */}
-          <div className="_comment_reply">
-            <div className="_comment_reply_num" style={{ position: 'static', bottom: 'auto', marginTop: 6 }}>
-              <ul className="_comment_reply_list">
-                <li>
-                  <span
-                    className={liked ? styles.likedLink : styles.likeLink}
-                    onClick={toggle}
-                  >
-                    Like.
-                  </span>
-                </li>
-                <li><span className={styles.actionLink}>Share</span></li>
-                <li><span className="_time_link">.{formatDate(reply.createdAt)}</span></li>
-                {isOwn && (
-                  <li>
-                    <span className={styles.deleteLink} onClick={handleDelete}>Delete</span>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
         </div>
+      </div>
+      </div>{/* end replyMain */}
+
+      {/* Action row */}
+      <div className={styles.actionRow}>
+        <span className={liked ? styles.likedLink : styles.likeLink} onClick={toggle}>Like.</span>
+        <span className={styles.actionLink}>Share</span>
+        <span className="_time_link">.{formatDate(reply.createdAt)}</span>
+        {isOwn && (
+          <span className={styles.deleteLink} onClick={handleDelete}>Delete</span>
+        )}
       </div>
 
       <LikedByModal isOpen={showLikers} onClose={() => setShowLikers(false)} fetchLikers={() => api.replies.likers(reply.id)} />

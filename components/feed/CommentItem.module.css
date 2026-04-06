@@ -1,27 +1,22 @@
 .wrap {
-  margin-bottom: 48px;
+  margin-bottom: 16px;
 }
 
-/* fix image: match ._comment_image which is block/circle but needs to align to top */
 :global(._comment_main) {
   align-items: flex-start !important;
 }
 
-/* The bubble has margin:0 0 50px from CSS — reduce and let reply row sit naturally */
 :global(._comment_details) {
-  margin-bottom: 8px !important;
+  margin-bottom: 0 !important;
 }
 
-/* reply row: override absolute positioning — sit inline below bubble */
-:global(._comment_reply_num) {
-  position: static !important;
-  bottom: auto !important;
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 4px;
   margin-top: 6px;
-}
-
-:global(._comment_reply_list) {
   flex-wrap: wrap;
-  gap: 2px 0;
 }
 
 .likeLink {

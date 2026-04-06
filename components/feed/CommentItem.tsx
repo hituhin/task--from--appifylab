@@ -98,33 +98,17 @@ export default function CommentItem({ comment, currentUserId, currentUser, onDel
               </div>
             )}
 
-            {/* Like / Reply / Share / time row */}
-            <div className="_comment_reply">
-              <div className="_comment_reply_num">
-                <ul className="_comment_reply_list">
-                  <li>
-                    <span
-                      className={liked ? styles.likedLink : styles.likeLink}
-                      onClick={toggle}
-                    >
-                      Like.
-                    </span>
-                  </li>
-                  <li>
-                    <span className={styles.actionLink} onClick={() => setShowReplyInput((v) => !v)}>
-                      Reply.
-                    </span>
-                  </li>
-                  <li><span className={styles.actionLink}>Share</span></li>
-                  <li><span className="_time_link">.{formatDate(comment.createdAt)}</span></li>
-                  {isOwn && (
-                    <li>
-                      <span className={styles.deleteLink} onClick={handleDelete}>Delete</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </div>
+          </div>
+
+          {/* Like / Reply / Share / time row — outside bubble to avoid absolute positioning clip */}
+          <div className={styles.actionRow}>
+            <span className={liked ? styles.likedLink : styles.likeLink} onClick={toggle}>Like.</span>
+            <span className={styles.actionLink} onClick={() => setShowReplyInput((v) => !v)}>Reply.</span>
+            <span className={styles.actionLink}>Share</span>
+            <span className="_time_link">.{formatDate(comment.createdAt)}</span>
+            {isOwn && (
+              <span className={styles.deleteLink} onClick={handleDelete}>Delete</span>
+            )}
           </div>
 
           {/* Reply input */}

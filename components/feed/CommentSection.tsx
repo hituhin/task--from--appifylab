@@ -32,12 +32,14 @@ export default function CommentSection({ postId, currentUser, onCommentCountChan
 
   // load previous comments from API (newest first = desc from API)
   useEffect(() => {
+    let cancelled = false
     api.comments.list(postId).then((data) => {
-      if (data.comments) {
-        setComments(data.comments) // already ordered desc (newest first)
+      if (!cancelled && data.comments) {
+        setComments(data.comments)
         setLoaded(true)
       }
     })
+    return () => { cancelled = true }
   }, [postId])
 
   const handleSubmit = async (e: React.FormEvent) => {

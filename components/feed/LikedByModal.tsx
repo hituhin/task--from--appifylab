@@ -24,11 +24,13 @@ export default function LikedByModal({ isOpen, onClose, fetchLikers }: LikedByMo
 
   useEffect(() => {
     if (!isOpen) return
+    let cancelled = false
     setIsLoading(true)
     fetchLikers()
-      .then((data) => setUsers(data.users ?? []))
-      .catch(() => setUsers([]))
-      .finally(() => setIsLoading(false))
+      .then((data) => { if (!cancelled) setUsers(data.users ?? []) })
+      .catch(() => { if (!cancelled) setUsers([]) })
+      .finally(() => { if (!cancelled) setIsLoading(false) })
+    return () => { cancelled = true }
   }, [isOpen, fetchLikers])
 
   return (

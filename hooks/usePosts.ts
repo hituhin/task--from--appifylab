@@ -18,7 +18,7 @@ export interface PostData {
   authorId: string
   author: PostAuthor
   _count: { likes: number; comments: number }
-  likes: { userId: string }[]
+  likes: { userId: string; reactionType?: string }[]
 }
 
 interface UsePostsReturn {
