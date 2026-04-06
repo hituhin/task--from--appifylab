@@ -11,6 +11,35 @@ const createCommentSchema = z.object({
   content: z.string().min(1).max(1000),
 })
 
+export async function GET(request: NextRequest) {
+  const session = await getServerSession(authOptions)
+  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { searchParams } = new URL(request.url)
+  const postId = searchParams.get('postId')
+  if (!postId) return NextResponse.json({ error: 'postId required' }, { status: 400 })
+
+  const comments = await prisma.comment.findMany({
+    where: { postId },
+    include: {
+      author: { select: { id: true, firstName: true, lastName: true } },
+      _count: { select: { likes: true, replies: true } },
+      likes: { where: { userId: session.user.id }, select: { userId: true } },
+      replies: {
+        include: {
+          author: { select: { id: true, firstName: true, lastName: true } },
+          _count: { select: { likes: true } },
+          likes: { where: { userId: session.user.id }, select: { userId: true } },
+        },
+        orderBy: { createdAt: 'asc' },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  })
+
+  return NextResponse.json({ comments })
+}
+
 export async function POST(request: NextRequest) {
   const session = await getServerSession(authOptions)
   if (!session) {

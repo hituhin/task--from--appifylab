@@ -1,137 +1,138 @@
-# Buddy Script
+# BuddyScript — Social Feed Application
 
-A social media platform built with Next.js 14 App Router, NextAuth.js, Prisma, and PostgreSQL.
+A full-stack social media feed application built with Next.js, Prisma, and PostgreSQL. Converted from three static HTML/CSS pages (Login, Register, Feed) into a fully functional web application with real authentication, database persistence, and interactive features.
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router) + TypeScript
-- **Auth:** NextAuth.js v4 with JWT + Credentials provider
-- **ORM:** Prisma v5 + PostgreSQL (Neon-compatible)
-- **Validation:** Zod
-- **Styling:** Original CSS (Bootstrap + custom) + Tailwind CSS utilities
-- **Deployment:** Vercel and Netlify compatible
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 16 (App Router), React 19 |
+| Styling | Original CSS preserved + Tailwind CSS v4 |
+| Backend | Next.js API Routes |
+| Auth | NextAuth.js v4 — JWT + Credentials |
+| Database | PostgreSQL + Prisma ORM v5 |
+| Validation | Zod v4 |
+| Deployment | Vercel / Netlify |
 
-## Setup
+## Features
 
-### 1. Clone and install dependencies
+### Authentication
+- Register with first name, last name, email, and password
+- Passwords hashed with bcrypt (cost factor 12)
+- JWT session — feed page protected, unauthenticated users redirected to `/login`
 
+### Feed
+- Create posts with text and optional image upload
+- Public posts visible to all users; Private posts visible only to the author
+- Posts ordered newest first with **cursor-based pagination** (scales to millions of records)
+- **Emoji reactions** on posts — click Reaction button to open picker (Like, Love, Haha, Wow, Sad, Angry)
+- Comments with nested replies
+- Like / unlike on posts, comments, and replies
+- View who liked — modal shows all users who reacted
+- Delete own posts, comments, and replies
+- Dark mode toggle
+
+### Security & Performance
+- All API routes require valid session (401 if unauthenticated)
+- User input sanitized (HTML stripped) before DB write
+- Rate limiting on all create endpoints
+- Zod schema validation on all API inputs
+- Prisma parameterized queries — no SQL injection risk
+- DB indexes on `createdAt DESC`, `authorId`, `postId`, `visibility + createdAt`
+
+## Getting Started
+
+### 1. Install dependencies
 ```bash
-git clone <repo-url>
-cd buddy-script
 npm install
 ```
 
-### 2. Configure environment variables
-
-Copy `.env.example` to `.env.local` and fill in your values:
-
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local`:
-
+### 2. Set up environment variables
+Create a `.env` file in the project root:
 ```env
-DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE?sslmode=require"
-NEXTAUTH_SECRET="generate-a-strong-random-secret"
+DATABASE_URL="postgresql://user:password@localhost:5432/buddyscript"
+NEXTAUTH_SECRET="your-secret-key"
 NEXTAUTH_URL="http://localhost:3000"
 ```
 
-For `NEXTAUTH_SECRET`, generate a random value:
+Generate a strong secret:
 ```bash
 openssl rand -base64 32
 ```
 
-### 3. Set up the database
-
-Run Prisma migrations to create the database schema:
-
+### 3. Push schema to database
 ```bash
-npx prisma migrate dev --name init
-```
-
-Or for production:
-
-```bash
-npx prisma migrate deploy
-```
-
-### 4. Generate Prisma client
-
-```bash
+npx prisma db push
 npx prisma generate
 ```
 
-### 5. Run the development server
+### 4. Seed with demo data
+```bash
+npm run seed
+```
 
+### 5. Run the development server
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open [http://localhost:3000](http://localhost:3000)
 
-## Deployment
+## Test Accounts
 
-### Vercel
+After seeding, use any of these accounts (password: `password123`):
 
-1. Push to GitHub
-2. Import the repository in Vercel
-3. Add environment variables in Vercel dashboard:
-   - `DATABASE_URL`
-   - `NEXTAUTH_SECRET`
-   - `NEXTAUTH_URL` (your production URL)
-4. Deploy
-
-### Netlify
-
-1. Push to GitHub
-2. Import the repository in Netlify
-3. Build settings are configured in `netlify.toml`
-4. Add environment variables in Netlify dashboard
-5. Deploy
+| Email | Name |
+|---|---|
+| steve@example.com | Steve Jobs |
+| ryan@example.com | Ryan Roslansky |
+| karim@example.com | Karim Saif |
+| emma@example.com | Emma Wilson |
 
 ## Project Structure
 
 ```
 buddy-script/
 ├── app/
-│   ├── (auth)/
-│   │   ├── layout.tsx          # Auth layout (loads CSS files)
-│   │   ├── login/page.tsx      # Login page
-│   │   └── register/page.tsx   # Registration page
+│   ├── (auth)/login/          # Login page
+│   ├── (auth)/register/       # Registration page
 │   ├── api/
-│   │   └── auth/
-│   │       ├── [...nextauth]/route.ts   # NextAuth handler
-│   │       └── register/route.ts       # Registration API
-│   ├── feed/page.tsx           # Feed page (protected)
-│   ├── layout.tsx              # Root layout with SessionProvider
-│   └── page.tsx                # Root redirect to /login
+│   │   ├── auth/              # NextAuth + register endpoint
+│   │   ├── posts/             # CRUD + like + likers
+│   │   ├── comments/          # CRUD + like + likers
+│   │   └── replies/           # CRUD + like + likers
+│   └── feed/                  # Protected feed page
 ├── components/
-│   └── providers/
-│       └── SessionProvider.tsx # Client-side session provider
-├── lib/
-│   ├── auth.ts                 # NextAuth options
-│   ├── prisma.ts               # Prisma client singleton
-│   └── validators.ts           # Zod schemas
+│   ├── feed/                  # PostCard, CommentSection, PostActions, etc.
+│   └── layout/                # Navbar, LeftSidebar, RightSidebar
+├── lib/                       # auth, prisma, api client, sanitize, rateLimit
+├── hooks/                     # useLike
 ├── prisma/
-│   └── schema.prisma           # Database schema
-├── public/
-│   └── assets/                 # CSS, images, fonts, JS
-├── types/
-│   └── next-auth.d.ts          # NextAuth type extensions
-├── middleware.ts               # Route protection middleware
-└── netlify.toml                # Netlify deployment config
+│   ├── schema.prisma
+│   └── seed.ts
+├── public/assets/             # Original CSS, images, JS
+└── proxy.ts                   # Route protection (Next.js 16)
 ```
 
-## Features (Phase 1 and Phase 2)
+## Deployment
 
-- User registration with first name, last name, email, and password
-- Secure password hashing with bcryptjs (cost factor 12)
-- JWT-based authentication with NextAuth.js
-- Protected routes (feed requires authentication via middleware)
-- Pixel-perfect replication of the original HTML/CSS design
-- Inline form validation with error messages
-- Loading states on submit buttons
-- Redirect to login after registration with success message
-- Redirect to feed after successful login
-# task--from--appifylab
+### Vercel (recommended)
+1. Push repository to GitHub
+2. Import in [vercel.com](https://vercel.com)
+3. Add environment variables: `DATABASE_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`
+4. Deploy — zero additional config needed
+
+### Netlify
+1. Push repository to GitHub
+2. Import in Netlify — `netlify.toml` is already configured
+3. Add the same three environment variables
+4. Deploy
+
+## Key Technical Decisions
+
+- **Cursor-based pagination** — offset pagination degrades at scale; cursor approach stays O(log n) with the index regardless of dataset size
+- **`proxy.ts` not `middleware.ts`** — Next.js 16 changed the middleware export name
+- **CSS Modules with `composes: from global`** — preserves all original `_` prefixed class names without touching the provided CSS files
+- **Base64 image upload** — no external storage service required for the demo; easily swapped for S3/Cloudinary in production by changing the API handler
+- **Zod v4** — uses `.issues` (breaking change from v3's `.errors`)
+- **`reactionType` on PostLike** — single record per user per post, updated in-place when switching reactions, toggled off when same reaction clicked again

@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     include: {
       author: { select: { id: true, firstName: true, lastName: true } },
       _count: { select: { likes: true, comments: true } },
-      likes: { where: { userId: session.user.id }, select: { userId: true } },
+      likes: { where: { userId: session.user.id }, select: { userId: true, reactionType: true } },
     },
     orderBy: { createdAt: 'desc' },
     take: limit + 1,
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     include: {
       author: { select: { id: true, firstName: true, lastName: true } },
       _count: { select: { likes: true, comments: true } },
-      likes: { where: { userId: session.user.id }, select: { userId: true } },
+      likes: { where: { userId: session.user.id }, select: { userId: true, reactionType: true } },
     },
   })
 

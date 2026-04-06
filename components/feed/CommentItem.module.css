@@ -1,61 +1,102 @@
 .wrap {
-  margin-bottom: 12px;
+  margin-bottom: 48px;
 }
 
-.replyLink {
+/* fix image: match ._comment_image which is block/circle but needs to align to top */
+:global(._comment_main) {
+  align-items: flex-start !important;
+}
+
+/* The bubble has margin:0 0 50px from CSS — reduce and let reply row sit naturally */
+:global(._comment_details) {
+  margin-bottom: 8px !important;
+}
+
+/* reply row: override absolute positioning — sit inline below bubble */
+:global(._comment_reply_num) {
+  position: static !important;
+  bottom: auto !important;
+  margin-top: 6px;
+}
+
+:global(._comment_reply_list) {
+  flex-wrap: wrap;
+  gap: 2px 0;
+}
+
+.likeLink {
   cursor: pointer;
-  font-size: 13px;
-  color: var(--text2, #666);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color6, #112032);
 }
 
-.replyLink:hover {
+.likedLink {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
   color: #377dff;
 }
 
-.deleteBtn {
-  background: none;
-  border: none;
+.actionLink {
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color6, #112032);
+}
+
+.actionLink:hover, .likeLink:hover {
+  color: #377dff;
+}
+
+.deleteLink {
+  cursor: pointer;
+  font-size: 13px;
   color: #ef4444;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
+.replyBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  padding-left: 0;
 }
 
 .replyForm {
+  flex: 1;
   display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  margin-top: 8px;
-  padding-left: 52px;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .replyInput {
-  flex: 1;
   resize: none;
   font-size: 13px;
+  border-radius: 8px;
 }
 
 .replySubmit {
+  align-self: flex-end;
   background: #377dff;
   color: #fff;
   border: none;
   border-radius: 6px;
-  padding: 6px 14px;
+  padding: 5px 14px;
   font-size: 13px;
   font-family: 'Poppins', sans-serif;
   cursor: pointer;
-  white-space: nowrap;
-  align-self: flex-end;
 }
 
 .replySubmit:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .repliesWrap {
-  margin-top: 8px;
+  margin-top: 10px;
+  padding-left: 10px;
 }
 
 .toggleReplies {
@@ -65,6 +106,6 @@
   font-size: 13px;
   color: #377dff;
   padding: 0;
-  padding-left: 52px;
   font-family: 'Poppins', sans-serif;
+  font-weight: 500;
 }
