@@ -27,6 +27,12 @@
   z-index: 100;
 }
 
+:global(._feed_timeline_dropdown_link) {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
 .dropBtn {
   background: none;
   border: none;
