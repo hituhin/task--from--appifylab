@@ -89,30 +89,6 @@ After seeding, use any of these accounts (password: `password123`):
 | karim@example.com | Karim Saif |
 | emma@example.com | Emma Wilson |
 
-## Project Structure
-
-```
-buddy-script/
-├── app/
-│   ├── (auth)/login/          # Login page
-│   ├── (auth)/register/       # Registration page
-│   ├── api/
-│   │   ├── auth/              # NextAuth + register endpoint
-│   │   ├── posts/             # CRUD + like + likers
-│   │   ├── comments/          # CRUD + like + likers
-│   │   └── replies/           # CRUD + like + likers
-│   └── feed/                  # Protected feed page
-├── components/
-│   ├── feed/                  # PostCard, CommentSection, PostActions, etc.
-│   └── layout/                # Navbar, LeftSidebar, RightSidebar
-├── lib/                       # auth, prisma, api client, sanitize, rateLimit
-├── hooks/                     # useLike
-├── prisma/
-│   ├── schema.prisma
-│   └── seed.ts
-├── public/assets/             # Original CSS, images, JS
-└── proxy.ts                   # Route protection (Next.js 16)
-```
 
 ## Deployment
 
